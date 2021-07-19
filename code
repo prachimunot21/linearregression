@@ -1,0 +1,70 @@
+# TASK1 GRIPJULY21
+IMPORTING LIBRARIES
+# IMPORTING LIBRARIES
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+​
+READING OF DATA FROM URL
+# READING OF DATA FROM URL
+url ="http://bit.ly/w-data"
+data =pd.read_csv(url)
+print("Data imported")
+data.head()
+Data imported
+Hours	Scores
+0	2.5	21
+1	5.1	47
+2	3.2	27
+3	8.5	75
+4	3.5	30
+data.describe()
+​
+Hours	Scores
+count	25.000000	25.000000
+mean	5.012000	51.480000
+std	2.525094	25.286887
+min	1.100000	17.000000
+25%	2.700000	30.000000
+50%	4.800000	47.000000
+75%	7.400000	75.000000
+max	9.200000	95.000000
+PLOTTING GRAPH
+# PLOTTING GRAPH
+data.plot(x='Hours',y='Scores',style ='*')
+plt.title('HOURS VS PERCENTAGE')
+plt.xlabel('Hours Studied')
+plt.ylabel('Percentage Score')
+plt.show()
+​
+
+SPLITTING ,TRAINING AND TESTING DATA
+# SPLITTING ,TRAINING AND TESTING DATA
+#splitting training and testing data
+x=data.iloc[:,:-1].values
+y=data.iloc[:,-1].values
+x_train ,x_test, y_train , y_test =train_test_split(x,y,train_size =0.80 ,test_size = 0.20,random_state=0)
+from sklearn.linear_model import LinearRegression
+linearRegressor =LinearRegression()
+linearRegressor.fit(x_train,y_train)
+y_predict = linearRegressor.predict(x_train)
+regressor =LinearRegression()
+regressor.fit(x_train , y_train)
+print('Data trained completely')
+Data trained completely
+line=regressor.coef_*x+regressor.intercept_
+plt.scatter(x,y)
+plt.plot(x,line);
+plt.show()
+
+print('Test Score')
+print(regressor.score(x_test ,y_test))
+print('Training score')
+print(regressor.score(x_train,y_train))
+Test Score
+0.9454906892105356
+Training score
+0.9515510725211552
+print(regressor.predict([[9.25]]))
+[93.69173249]
